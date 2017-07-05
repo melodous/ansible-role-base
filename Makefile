@@ -35,19 +35,16 @@ $(VENV): $(REQ)
 	mkdir -p $@; \
 	[ -z "$$VIRTUAL_ENV" ] && $(VIRTUALENV)  --no-site-packages  --distribute -p $(PYTHON) $@; \
 	$@/bin/pip install --exists-action w -r $(REQ);
-	@echo && echo && echo && echo
 
 ansiblelint: venv
 	@echo ">>> Executing ansible lint..."
 	@[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	ansible-lint -r ansible-lint -r $(VENV)/lib/python2.7/site-packages/ansiblelint/rules playbook.yml
-	@echo
 
 yamllint: venv
 	@echo ">>> Executing yaml lint..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	yamllint tasks/* vars/* defaults/* meta/* handlers/*
-	@echo
 
 lint: yamllint ansiblelint
 
