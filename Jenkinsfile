@@ -10,25 +10,35 @@ node {
           checkout scm
        }
 
-       stage('Lint ansible role'){
+       stage('Molecule syntax'){
 
-         sh 'make ansiblelint'
-
-       }
-
-       stage('Lint ansible role'){
-
-         sh 'make yamllint'
+         sh 'make syntax'
 
        }
 
+       stage('Molecule create'){
 
-       stage('Generate infrastructure and test'){
+         sh 'make create'
 
-         sh 'make test'
+			 }
+
+       stage('Molecule converge'){
+
+         sh 'make converge'
+
+			 }
+
+       stage('Molecule idempotence'){
+
+         sh 'make idempotence'
+
+			 }
+
+       stage('Molecule verify'){
+
+         sh 'make verify'
 
        }
-
 
     }
     catch (err) {

@@ -4,9 +4,9 @@ REQ                = requirements.txt
 VIRTUALENV         ?= $(shell which virtualenv)
 PYTHON             ?= $(shell which python2.7)
 PIP                ?= $(shell which pip2.7)
-MOLECULE_PROVIDER  = openstack
+MOLECULE_PROVIDER  = vagrant
 VENV               ?= $(ROOT)/.venv
-PLATFORMS          = rhel6 rhel7
+PLATFORMS          = rhel7
 
 .ONESHELL:
 .PHONY: test test_rhel6 test_rhel7 clean venv $(VENV)
@@ -37,16 +37,13 @@ $(VENV): $(REQ)
 	$@/bin/pip install --exists-action w -r $(REQ);
 	@echo && echo && echo && echo
 
-linkrole:
-	@mkdir -p roles/ ; rm -rf roles/$(APP) 2>/dev/null; ln -sf ../ roles/$(APP)
-
-ansiblelint: venv linkrole
+ansiblelint: venv
 	@echo ">>> Executing ansible lint..."
 	@[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	ansible-lint -r ansible-lint -r $(VENV)/lib/python2.7/site-packages/ansiblelint/rules playbook.yml
 	@echo
 
-yamllint: venv linkrole
+yamllint: venv
 	@echo ">>> Executing yaml lint..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	yamllint tasks/* vars/* defaults/* meta/* handlers/*
@@ -60,11 +57,43 @@ delete:
 	molecule destroy --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER)
 	@echo
 
-test: venv linkrole
+test: venv
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule test --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
 	@echo
+
+create:
+	@echo ">>> Runing $(PLAFORM) tests ..."
+	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+	molecule create --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+	@echo
+
+converge:
+	@echo ">>> Runing $(PLAFORM) tests ..."
+	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+	molecule create --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+	@echo
+
+syntax: venv
+  @echo ">>> Runing $(PLAFORM) tests ..."
+  [ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+  molecule syntax --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+  @echo
+
+idempotence:
+  @echo ">>> Runing $(PLAFORM) tests ..."
+  [ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+  molecule idempotence --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+  @echo
+
+verify:
+  @echo ">>> Runing $(PLAFORM) tests ..."
+  [ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+  PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule verify --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+  @echo
+
+
 
 clean:
 	@echo ">>> Cleaning temporal files..."
@@ -74,5 +103,4 @@ clean:
 	rm -rf tests/__pycache__/
 	rm -rf .vagrant/
 	rm -rf .molecule/
-	rm -rf roles/
 	@echo
