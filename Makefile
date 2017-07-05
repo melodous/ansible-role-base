@@ -36,6 +36,9 @@ $(VENV): $(REQ)
 	[ -z "$$VIRTUAL_ENV" ] && $(VIRTUALENV)  --no-site-packages  --distribute -p $(PYTHON) $@; \
 	$@/bin/pip install --exists-action w -r $(REQ);
 
+linkrole:
+	@mkdir -p roles/ ; rm -rf roles/$(APP) 2>/dev/null; 	ln -sf ../ roles/$(APP)
+
 ansiblelint: venv
 	@echo ">>> Executing ansible lint..."
 	@[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
@@ -53,7 +56,7 @@ delete:
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule destroy --platform=$(PLATFORM);
 
-test: venv
+test: venv linkrole
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule test --platform=$(PLATFORM);
@@ -68,7 +71,7 @@ converge:
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule create --platform=$(PLATFORM);
 
-syntax: venv
+syntax: venv linkrole
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule syntax;
