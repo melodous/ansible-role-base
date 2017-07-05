@@ -55,43 +55,36 @@ delete:
 	@echo ">>> Deleting $(PLAFORM) ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule destroy --platform=$(PLATFORM);
-	@echo
 
 test: venv
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule test --platform=$(PLATFORM);
-	@echo
 
 create:
-	@echo ">>> Runing $(PLAFORM) tests ..."
+	@echo ">>> Runing $(PLAFORM) create ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule create --platform=$(PLATFORM);
-	@echo
 
 converge:
-	@echo ">>> Runing $(PLAFORM) tests ..."
+	@echo ">>> Runing $(PLAFORM) converge ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule create --platform=$(PLATFORM);
-	@echo
 
 syntax: venv
-	@echo ">>> Runing $(PLAFORM) tests ..."
+	@echo ">>> Runing $(PLAFORM) syntax ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule syntax;
-	@echo
 
 idempotence:
-	@echo ">>> Runing $(PLAFORM) tests ..."
+	@echo ">>> Runing $(PLAFORM) idempotence ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule idempotence --platform=$(PLATFORM);
-	@echo
 
 verify:
-	@echo ">>> Runing $(PLAFORM) tests ..."
+	@echo ">>> Runing $(PLAFORM) verify ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule verify --platform=$(PLATFORM);
-	@echo
 
 
 
