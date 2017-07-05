@@ -23,6 +23,7 @@ default:
 	@echo "    clean                           - Remove generated files and directories"
 	@echo "    venv                            - Create and update virtual environments"
 	@echo "    test PLATFORM=($(PLATFORMS))    - Run test on specified platform"
+	@echo "    syntax                          - Run syntax checks"
 	@echo "    del PLATFORM=($(PLATFORMS))     - Remove specified platform"
 	@echo "    ansiblelint                     - Run ansible-lint validations
 	@echo "    yamllint                        - Run yamlint validations
