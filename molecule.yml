@@ -9,14 +9,9 @@ molecule:
     - .vagrant
     - .molecule
     - .venv
-lint:
-  name: ansible-lint
-  options:
-    excludes:
-      - ./.venv
 vagrant:
   platforms:
-    - name: instance-01
+    - name: rhel7
       box: bento/centos-7.1
 #      box_url: https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box
   providers:

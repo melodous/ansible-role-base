@@ -4,7 +4,7 @@ REQ                = requirements.txt
 VIRTUALENV         ?= $(shell which virtualenv)
 PYTHON             ?= $(shell which python2.7)
 PIP                ?= $(shell which pip2.7)
-MOLECULE_PROVIDER  = vagrant
+MOLECULE_PROVIDER  = virtualbox
 VENV               ?= $(ROOT)/.venv
 PLATFORMS          = rhel7
 
@@ -54,44 +54,44 @@ lint: yamllint ansiblelint
 delete:
 	@echo ">>> Deleting $(PLAFORM) ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-	molecule destroy --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER)
+	molecule destroy --platform=$(PLATFORM);
 	@echo
 
 test: venv
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule test --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule test --platform=$(PLATFORM);
 	@echo
 
 create:
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-	molecule create --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+	molecule create --platform=$(PLATFORM);
 	@echo
 
 converge:
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-	molecule create --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
+	molecule create --platform=$(PLATFORM);
 	@echo
 
 syntax: venv
-  @echo ">>> Runing $(PLAFORM) tests ..."
-  [ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-  molecule syntax --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
-  @echo
+	@echo ">>> Runing $(PLAFORM) tests ..."
+	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+	molecule syntax;
+	@echo
 
 idempotence:
-  @echo ">>> Runing $(PLAFORM) tests ..."
-  [ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-  molecule idempotence --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
-  @echo
+	@echo ">>> Runing $(PLAFORM) tests ..."
+	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+	molecule idempotence --platform=$(PLATFORM);
+	@echo
 
 verify:
-  @echo ">>> Runing $(PLAFORM) tests ..."
-  [ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-  PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule verify --platform=$(PLATFORM) --provider=$(MOLECULE_PROVIDER);
-  @echo
+	@echo ">>> Runing $(PLAFORM) tests ..."
+	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule verify --platform=$(PLATFORM);
+	@echo
 
 
 
