@@ -9,6 +9,7 @@ molecule:
     - .vagrant
     - .molecule
     - .venv
+    - docs
 vagrant:
   platforms:
     - name: rhel7
