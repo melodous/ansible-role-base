@@ -7,6 +7,7 @@ PIP                ?= $(shell which pip2.7)
 MOLECULE_PROVIDER  = virtualbox
 VENV               ?= $(ROOT)/.venv
 PLATFORMS          = rhel7
+SHELL              = /bin/bash
 
 .ONESHELL:
 .PHONY: test test_rhel6 test_rhel7 clean venv $(VENV)
