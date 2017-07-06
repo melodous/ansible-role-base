@@ -40,6 +40,12 @@ node {
 
        }
 
+
+       stage('Molecule Delete'){
+
+         sh 'make delete'
+
+       }
     }
     catch (err) {
 

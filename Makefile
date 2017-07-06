@@ -58,7 +58,7 @@ delete:
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule destroy --platform=$(PLATFORM);
 
-test: venv linkrole
+test: venv linkrole delete
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule test --platform=$(PLATFORM);
@@ -73,7 +73,7 @@ converge:
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule create --platform=$(PLATFORM);
 
-syntax: venv linkrole
+syntax: venv linkrole delete
 	@echo ">>> Runing $(PLAFORM) tests ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	molecule syntax;
