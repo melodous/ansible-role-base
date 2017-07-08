@@ -72,7 +72,7 @@ create:
 converge:
 	@echo ">>> Runing $(PLAFORM) converge ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-	molecule create --platform=$(PLATFORM);
+	molecule converge --platform=$(PLATFORM);
 
 syntax: venv linkrole delete
 	@echo ">>> Runing $(PLAFORM) tests ..."
@@ -92,7 +92,8 @@ verify:
 docs: venv_docs
 	@echo ">>> Generating documentation ..."
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
-	cd docs && make clean && make rst
+	cd docs && make clean && make rst; \
+	pandoc --from=rst --to=markdown --output=README.md docs/_build/rst/index.rst
 
 
 venv_docs: $(REQ_DOCS)
