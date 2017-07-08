@@ -1,6 +1,7 @@
 APP                = ansible-role-base
 ROOT               = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 REQ                = requirements.txt
+REQ_DOCS           = requirements_docs.txt
 VIRTUALENV         ?= $(shell which virtualenv)
 PYTHON             ?= $(shell which python2.7)
 PIP                ?= $(shell which pip2.7)
@@ -10,7 +11,7 @@ PLATFORMS          = rhel7
 SHELL              = /bin/bash
 
 .ONESHELL:
-.PHONY: test test_rhel6 test_rhel7 clean venv $(VENV)
+.PHONY: test test_rhel6 test_rhel7 clean venv docs venv_docs $(VENV)
 
 all: default
 
@@ -88,6 +89,17 @@ verify:
 	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
 	PYTEST_ADDOPTS="--junit-xml junit-$(PLATFORM).xml --ignore roles/$(APP)" molecule verify --platform=$(PLATFORM);
 
+docs: venv_docs
+	@echo ">>> Generating documentation ..."
+	[ -z "$$VIRTUAL_ENV" ] && source $(VENV)/bin/activate; \
+	cd docs && make clean && make rst
+
+
+venv_docs: $(REQ_DOCS)
+	@echo ">>> Initializing virtualenv..."
+	mkdir -p $(VENV); \
+	[ -z "$$VIRTUAL_ENV" ] && $(VIRTUALENV)  --no-site-packages  --distribute -p $(PYTHON) $(VENV); \
+	source $(VENV)/bin/activate; $(VENV)/bin/pip install --exists-action w -r $(REQ_DOCS);
 
 
 clean:

@@ -4,10 +4,27 @@
    contain the root `toctree` directive.
 
 Welcome to Redis Ansible Role's documentation!
-==============================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 5
    :caption: Contents:
 
-   default
+
+
+.. include:: ../DESCRIPTION.rst
+
+|
+
+.. include:: ../DEFAULTS.rst
+
+|
+
+.. include:: ../CHANGES.rst
+
+|
+
+Copyright
+=========
+
+.. include:: ../COPYRIGHT

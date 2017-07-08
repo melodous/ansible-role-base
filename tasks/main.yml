@@ -1,4 +1,6 @@
 ---
-# tasks file for .
-- name: Test
-  debug: msg=hola
+
+- include: configure.yml
+
+- include: monitoring.yml
+  when: (monitoring|default('true') and ansible-role-base_monitoring)
