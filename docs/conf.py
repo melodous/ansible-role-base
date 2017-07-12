@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Redis Ansible Role documentation build configuration file, created by
+# ansible-role-base Ansible Role documentation build configuration file, created by
 # sphinx-quickstart on Wed Jul  5 16:29:58 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Redis Ansible Role'
+project = u'ansible-role-base Ansible Role'
 copyright = u'2017, Raul Melo'
 author = u'Raul Melo'
 
@@ -121,7 +121,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'RedisAnsibleRoledoc'
+htmlhelp_basename = 'ansible-role-baseAnsibleRoledoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -148,7 +148,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'RedisAnsibleRole.tex', u'Redis Ansible Role Documentation',
+    (master_doc, 'ansible-role-baseAnsibleRole.tex', u'ansible-role-base Ansible Role Documentation',
      u'Raul Melo', 'manual'),
 ]
 
@@ -158,7 +158,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'redisansiblerole', u'Redis Ansible Role Documentation',
+    (master_doc, 'ansible-role-baseansiblerole', u'ansible-role-base Ansible Role Documentation',
      [author], 1)
 ]
 
@@ -169,8 +169,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'RedisAnsibleRole', u'Redis Ansible Role Documentation',
-     author, 'RedisAnsibleRole', 'One line description of project.',
+    (master_doc, 'ansible-role-baseAnsibleRole', u'ansible-role-base Ansible Role Documentation',
+     author, 'ansible-role-baseAnsibleRole', 'One line description of project.',
      'Miscellaneous'),
 ]
 
